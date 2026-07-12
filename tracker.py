@@ -17,6 +17,7 @@ categories = {
     "travel": {"keywords": ["DELTA AIR", "Airbnb", "UCF CASHIERS"], "amount": 0},
     "transfers": {"keywords": ["ZELLE TO", "ONLINE TRANSFER REF", "ATM WITHDRAWAL"], "amount": 0},
     "other":  {"keywords": ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'], "amount": 0}
+    #Other has every letter as a keyword so that any description that doesn't match the other categories will go into other
 }
 
 
@@ -45,7 +46,7 @@ for row in reader:           #row is list: description, amount, etc
             
 file.close()  
    
-for amt in categories:
+for amt in categories: #Debugging purposes
    print(f"Amount for {amt}:  {round(categories[amt]['amount'],2)}")
 
 #ALL OF CODE ABOVE WAS TO SORT TRANSACTIONS INTO CATEGORIES AND LIST DIFFERENT TRANSACTIONS INTO DICS
