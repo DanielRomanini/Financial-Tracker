@@ -34,10 +34,12 @@ Transactions are automatically categorized using keyword matching across 12 cate
 `groceries`, `gas`, `restaurants`, `food_delivery`, `transportation`, `subscriptions`, `entertainment`, `income`, `health_personal`, `travel`, `transfers`, `other`
 
 ## Project Structure
+```
 Financial-Tracker/
 ├── tracker.py       # Main application — CSV parsing, DB logic, Flask API
 ├── .gitignore       # Excludes sensitive files (CSV, database)
 └── README.md        # Project documentation
+```
 
 ## What I Learned
 - Parsing and cleaning real-world financial data from CSV exports
