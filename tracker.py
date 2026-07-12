@@ -12,8 +12,8 @@ categories = {
     "transportation": {"keywords": ["Uber Technologies", "Lyft", "MTA", "PATH TAPP", "NJTRANSIT", "EVOLVE ST"], "amount": 0},
     "subscriptions": {"keywords": ["Spotify", "OPENAI", "ChatGPT", "Apple.com", "Riot"], "amount": 0},
     "entertainment": {"keywords": ["Steam", "STEAMGAMES", "WL *STEAM", "AMNH"], "amount": 0},
-    "income": {"keywords": ["THE UNIVERSITY O", "ZELLE FROM T BARROS PAULO", "ZELLE FROM", "WELLS FARGO REWARDS", "ONLINE TRANSFER FROM"], "amount": 0},
-    "health_personal": {"keywords": ["Walgreens", "GNC", "ALLIANZ", "E SMOKE", "IN & OUT TOBACCO"], "amount": 0},
+    "income": {"keywords": ["THE UNIVERSITY O", "ZELLE FROM", "WELLS FARGO REWARDS", "ONLINE TRANSFER FROM"], "amount": 0},
+    "health_personal": {"keywords": ["Walgreens", "GNC", "ALLIANZ"], "amount": 0},
     "travel": {"keywords": ["DELTA AIR", "Airbnb", "UCF CASHIERS"], "amount": 0},
     "transfers": {"keywords": ["ZELLE TO", "ONLINE TRANSFER REF", "ATM WITHDRAWAL"], "amount": 0},
     "other":  {"keywords": ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'], "amount": 0}

@@ -14,7 +14,7 @@ A REST API that parses Wells Fargo bank transaction data from a CSV file, catego
 git clone https://github.com/yourusername/Financial-Tracker.git
 2. Install Flask
 pip install flask
-3. Add your Wells Fargo CSV export to the project folder and name it `Checking.csv`
+3. Optional: Change the sample file for your own Wells Fargo export, title it "Checking.csv"
 4. Run the tracker
 python tracker.py
 5. The API will be available at `http://127.0.0.1:5000`
