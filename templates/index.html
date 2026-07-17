@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+    </head>
+        <body>
+            <h1 class="header">Dashboard</h1>
+            <div>
+                <a href="/transactions">See all transactions</a>
+            </div>
+            <div>
+                <a href = "/summary">See summary</a>
+            </div>
+            <div>
+                <a href = "/totals">See totals</a>
+            </div>
+            <div>Select the type for which you would like to see totals for:</div>
+            <div>
+                <button id = 'tot_gas' type = 'button'>Gas</button>
+                <button id = 'tot_rest' type = 'button'>Restaurants</button>
+                <button id = 'tot_food_del' type = 'button'>Food Delivery</button>
+                <button id = 'tot_transport' type = 'button'>Transportation</button>
+                <button id = 'tot_subs' type = 'button'>Subscriptions</button>
+                <button id = 'tot_ent' type = 'button'>Entertainment</button>
+                <button id = 'tot_income' type = 'button'>Income</button>
+                <button id = 'tot_health' type = 'button'>Health & Personal</button>
+                <button id = 'tot_travel' type = 'button'>Travel</button>
+                <button id = 'tot_transfers' type = 'button'>Transfers</button>
+                <button id = 'tot_other' type = 'button'>Other</button>
+                <button id = 'tot_groc' type = 'button'>Groceries</button>
+            </div>
+            <script src = 'static\dashboard.js'></script>
+        </body>
+
+</html>

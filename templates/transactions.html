@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel = 'stylesheet' href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <table>
+            <thead>
+                <tr>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>ID</th>
+                </tr>
+            </thead>
+            <tbody id = "transrows">
+            </tbody>
+        </table>
+        <script src="{{url_for('static',filename='script.js')}}"></script>
+    </body>
+
+</html>
