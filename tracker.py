@@ -76,7 +76,7 @@ app = Flask(__name__)
 
 
 
-@app.route("/api/transactions") #GETS A LIST OF ALL TRANSACTIONS
+@app.route("/api/transactions") #GETS A JSON OF ALL TRANSACTIONS
 def transactions():
     connection = sqlite3.connect("Transactions.db")   #Creates connection to database
     cursor = connection.cursor()                      #Gives me a way of sending commands to database
@@ -92,12 +92,12 @@ def transactions():
         transactions_list.append(temp)
     return jsonify(transactions_list)
 
-@app.route("/transactions")
+@app.route("/transactions") #Links me to the file that sets up the actual table
 def trans():
     return render_template('transactions.html')
 
 
-@app.route("/api/transactions/<type>") #GETS A LIST OF TRANSACTIONS ACCORDING TO SPECIFIC TYPE OF TRANSACTION
+@app.route("/api/transactions/<type>") #GETS A JSON OF TRANSACTIONS ACCORDING TO SPECIFIC TYPE OF TRANSACTION
 def transaction_per_type(type):
     connection = sqlite3.connect("Transactions.db")
     cursor = connection.cursor()

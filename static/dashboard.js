@@ -58,3 +58,10 @@ let othertot = document.querySelector("#tot_other")
 othertot.addEventListener('click',function(event){
     window.location.href = '/transactions/other'
 })
+
+let dateselec = document.querySelector("#dateSelec")
+dateselec.addEventListener('submit',function(event){
+    event.preventDefault()
+    let temp = document.querySelector("#dateSelec input[name='date']").value
+    window.location.href = `/transactions/date/${temp}`
+})
