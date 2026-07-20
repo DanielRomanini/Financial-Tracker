@@ -6,37 +6,44 @@
         <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
     </head>
         <body>
-            <h1 class="header">Dashboard</h1>
-            <div>
-                <a href="/transactions">See all transactions</a>
-            </div>
-            <div>
-                <a href = "/summary">See summary</a>
-            </div>
-            <div>
-                <a href = "/totals">See totals</a>
-            </div>
-            <div>Select the type for which you would like to see totals for:</div>
-            <div>
-                <button id = 'tot_gas' type = 'button'>Gas</button>
-                <button id = 'tot_rest' type = 'button'>Restaurants</button>
-                <button id = 'tot_food_del' type = 'button'>Food Delivery</button>
-                <button id = 'tot_transport' type = 'button'>Transportation</button>
-                <button id = 'tot_subs' type = 'button'>Subscriptions</button>
-                <button id = 'tot_ent' type = 'button'>Entertainment</button>
-                <button id = 'tot_income' type = 'button'>Income</button>
-                <button id = 'tot_health' type = 'button'>Health & Personal</button>
-                <button id = 'tot_travel' type = 'button'>Travel</button>
-                <button id = 'tot_transfers' type = 'button'>Transfers</button>
-                <button id = 'tot_other' type = 'button'>Other</button>
-                <button id = 'tot_groc' type = 'button'>Groceries</button>
-            </div>
-            <div>
-                Write the date you'd like to see transactions for
-                <form id="dateSelec">
-                    <input name = "date" id="date" type = "text">
-                    <input type="submit">
-                </form>
+            <div class="page">
+                <h1 class="header">Dashboard</h1>
+
+                <div class="container">
+                    <nav class="nav-links">
+                        <a href="/transactions">See all transactions</a>
+                       <!--- <a href="/summary">See summary</a>
+                        <a href="/totals">See totals</a> -- REMOVE COMMENT AFTER FIXING FORMATTING FOR THESE SPECIFICALLY-->
+                    </nav>
+
+                    <section class="card">
+                        <h2 class="card-title">Totals by category</h2>
+                        <p class="card-subtitle">Select a category to see its total</p>
+                        <div class="category-grid">
+                            <button id = 'tot_gas' type = 'button'>Gas</button>
+                            <button id = 'tot_rest' type = 'button'>Restaurants</button>
+                            <button id = 'tot_food_del' type = 'button'>Food Delivery</button>
+                            <button id = 'tot_transport' type = 'button'>Transportation</button>
+                            <button id = 'tot_subs' type = 'button'>Subscriptions</button>
+                            <button id = 'tot_ent' type = 'button'>Entertainment</button>
+                            <button id = 'tot_income' type = 'button'>Income</button>
+                            <button id = 'tot_health' type = 'button'>Health & Personal</button>
+                            <button id = 'tot_travel' type = 'button'>Travel</button>
+                            <button id = 'tot_transfers' type = 'button'>Transfers</button>
+                            <button id = 'tot_other' type = 'button'>Other</button>
+                            <button id = 'tot_groc' type = 'button'>Groceries</button>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <h2 class="card-title">Search by date</h2>
+                        <p class="card-subtitle">Write the date you'd like to see transactions for</p>
+                        <form id="dateSelec" class="date-form">
+                            <input name = "date" type = "text" placeholder="MM-DD-YYYY">
+                            <input type="submit" value="submit">
+                        </form>
+                    </section>
+                </div>
             </div>
             <script src = 'static\dashboard.js'></script>
         </body>

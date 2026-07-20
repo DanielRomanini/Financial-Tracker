@@ -59,9 +59,12 @@ othertot.addEventListener('click',function(event){
     window.location.href = '/transactions/other'
 })
 
+
+
+
 let dateselec = document.querySelector("#dateSelec")
 dateselec.addEventListener('submit',function(event){
-    event.preventDefault()
+    event.preventDefault() //stops native navigation, allowing window.location/href to be the page it actually goes to
     let temp = document.querySelector("#dateSelec input[name='date']").value
     window.location.href = `/transactions/date/${temp}`
 })
