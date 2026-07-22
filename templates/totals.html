@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <div class="page">
+            <h1 class="header">Totals by Category</h1>
+
+            <div class="container">
+                <section class="card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="totalrows">
+                            <tr>
+                                <td>Groceries</td>
+                                <td id="tot_groc"></td>
+                            </tr>
+                            <tr>
+                                <td>Gas</td>
+                                <td id="tot_gas"></td>
+                            </tr>
+                            <tr>
+                                <td>Restaurants</td>
+                                <td id="tot_rest"></td>
+                            </tr>
+                            <tr>
+                                <td>Food Delivery</td>
+                                <td id="tot_food_del"></td>
+                            </tr>
+                            <tr>
+                                <td>Transportation</td>
+                                <td id="tot_transport"></td>
+                            </tr>
+                            <tr>
+                                <td>Subscriptions</td>
+                                <td id="tot_subs"></td>
+                            </tr>
+                            <tr>
+                                <td>Entertainment</td>
+                                <td id="tot_ent"></td>
+                            </tr>
+                            <tr>
+                                <td>Income</td>
+                                <td id="tot_income"></td>
+                            </tr>
+                            <tr>
+                                <td>Health & Personal</td>
+                                <td id="tot_health"></td>
+                            </tr>
+                            <tr>
+                                <td>Travel</td>
+                                <td id="tot_travel"></td>
+                            </tr>
+                            <tr>
+                                <td>Transfers</td>
+                                <td id="tot_transfers"></td>
+                            </tr>
+                            <tr>
+                                <td>Other</td>
+                                <td id="tot_other"></td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>All Categories</td>
+                                <td id="tot_all"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
+        <script src="{{ url_for('static', filename='totals.js') }}"></script>
+    </body>
+
+</html>

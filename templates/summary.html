@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <div class="page">
+            <h1 class="header">Summary</h1>
+
+            <div class="container">
+                <section class="card">
+                    <div class="summary-grid" id="summaryGrid">
+                    </div>
+                </section>
+            </div>
+        </div>
+        <script src="{{ url_for('static', filename='summary.js') }}"></script>
+    </body>
+
+</html>

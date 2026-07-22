@@ -23,7 +23,7 @@ categories = {
 
 file = open("Checking.csv", 'r')
 
-transactions = []
+transacs = []
 
 reader = csv.DictReader(file)
 
@@ -33,7 +33,7 @@ for row in reader:           #row is list: description, amount, etc
     for cat in categories:   #cat is list: groceries, gas, etc)
         for keyword in categories[cat]["keywords"]:      #keyword is word: Publix, Target, etc
             if keyword.lower() in row["DESCRIPTION"].lower():
-                transactions.append({"Type": f"{cat}", "Amount": float(row["AMOUNT"]), "Date": f"{row["DATE"].replace("/","-")}", "Description": row["DESCRIPTION"]})
+                transacs.append({"Type": f"{cat}", "Amount": float(row["AMOUNT"]), "Date": f"{row["DATE"].replace("/","-")}", "Description": row["DESCRIPTION"]})
                 categories[cat]["amount"] += float(row["AMOUNT"])
                 checker = True
                 break
@@ -64,7 +64,7 @@ cursor.execute("CREATE TABLE IF NOT EXISTS transactions(id INTEGER PRIMARY KEY A
 cursor.execute("DELETE FROM transactions") #Deletes all transactions so new CSV file can be uploaded
 cursor.execute("DELETE FROM sqlite_sequence WHERE name='transactions'") #Restarts the count for id
 
-for trans in transactions: #Adds each individual transaction into transactions table in the database
+for trans in transacs: #Adds each individual transaction into transactions table in the database
     cursor.execute("INSERT INTO transactions(Type, Amount, Description, Date) VALUES (?, ?, ?, ?)", (trans["Type"], trans["Amount"], trans["Description"], trans["Date"]))
 
 connection.commit() #Without this, no actual changes are being permanently ran in the database.
@@ -172,7 +172,7 @@ def totals():
 
 @app.route("/totals")
 def tots():
-    return render_template("transactions.html")
+    return render_template("totals.html")
 
 
 @app.route("/api/summary") #Shows how much you've spent, how much you've gained, and the difference between those
@@ -196,7 +196,7 @@ def summary():
 
 @app.route("/summary")
 def sum():
-    return render_template('transactions.html')
+    return render_template('summary.html')
 
 
 
@@ -206,5 +206,6 @@ def home():
 
 
 if __name__ == "__main__": #Checks that the file was run directly
-    app.run(debug=True)    #app.run() starts a local server, debug=True has some conveniences
+    app.run(debug=False)    #app.run() starts a local server, debug=True has some conveniences
+    #set it to debug=False as that protects me once it is deployed. should only be True for local use
     
