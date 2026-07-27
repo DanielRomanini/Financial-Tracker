@@ -1,5 +1,7 @@
 async function getSummary() {
-    let response = await fetch('/api/summary')
+    let response = await fetch('/api/summary',{
+    headers: { "X-API-Key": "FinancialTrackerPassword" }
+})
     let summary = await response.json()
     let grid = document.getElementById('summaryGrid')
     for (entry of summary) {

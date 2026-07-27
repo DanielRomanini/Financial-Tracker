@@ -15,7 +15,9 @@ const typeToId = {
 }
 
 async function getTotals() {
-    let response = await fetch('/api/totals')
+    let response = await fetch('/api/totals',{
+    headers: { "X-API-Key": "FinancialTrackerPassword" }
+})
     let totals = await response.json()
     for (row of totals) {
         let id = typeToId[row.Type]

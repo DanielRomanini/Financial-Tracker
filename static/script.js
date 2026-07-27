@@ -3,7 +3,9 @@
 
 async function getTransactions() {
     let url = '/api' + window.location.pathname
-    let response = await fetch(url)
+    let response = await fetch(url,{
+    headers: { "X-API-Key": "FinancialTrackerPassword" }
+})
     let transactions = await response.json()
     for (num of transactions){
         let row = document.createElement('tr') //creates row

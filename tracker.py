@@ -1,7 +1,18 @@
 import sys
 import csv
-import sqlite3
-from flask import Flask, jsonify, render_template
+import psycopg2
+from flask import Flask, jsonify, render_template, request
+from dotenv import load_dotenv
+import os
+
+load_dotenv() #reads .env, loads API_KEY into os.environ.
+
+API_KEY = os.environ.get("API_KEY") #Actually reads value of API_KEY, returns none if no API_KEY exists
+print(API_KEY)
+
+def get_db_connection(): #Function for connecting to database, if i ever want to change databases i change this function instead of every route
+    conn = psycopg2.connect(os.environ.get("DATABASE_URL"))
+    return conn
 
 
 categories = {
@@ -56,30 +67,42 @@ file.close()
 
 #BELOW IS INCORPORATION OF SQLITE3
 
-connection = sqlite3.connect("Transactions.db")   #Creates database
-cursor = connection.cursor()                      #Gives me a way of sending commands to database
+conn = get_db_connection()   #Creates database
 
-cursor.execute("CREATE TABLE IF NOT EXISTS transactions(id INTEGER PRIMARY KEY AUTOINCREMENT, Type TEXT, Amount REAL, Description TEXT, Date TEXT)")
+try:
+    cursor = conn.cursor()                      #Gives me a way of sending commands to database
 
-cursor.execute("DELETE FROM transactions") #Deletes all transactions so new CSV file can be uploaded
-cursor.execute("DELETE FROM sqlite_sequence WHERE name='transactions'") #Restarts the count for id
+    cursor.execute("CREATE TABLE IF NOT EXISTS transactions(id SERIAL PRIMARY KEY, Type TEXT, Amount REAL, Description TEXT, Date TEXT)")
 
-for trans in transacs: #Adds each individual transaction into transactions table in the database
-    cursor.execute("INSERT INTO transactions(Type, Amount, Description, Date) VALUES (?, ?, ?, ?)", (trans["Type"], trans["Amount"], trans["Description"], trans["Date"]))
+    cursor.execute("DELETE FROM transactions") #Deletes all transactions so new CSV file can be uploaded
+    cursor.execute("ALTER SEQUENCE transactions_id_seq RESTART WITH 1") #Restarts id count
 
-connection.commit() #Without this, no actual changes are being permanently ran in the database.
+    for trans in transacs: #Adds each individual transaction into transactions table in the database
+        cursor.execute("INSERT INTO transactions(Type, Amount, Description, Date) VALUES (%s, %s, %s, %s)", (trans["Type"], trans["Amount"], trans["Description"], trans["Date"]))
+
+    conn.commit() #Without this, no actual changes are being permanently ran in the database.
+except Exception:
+    conn.rollback() #Undo any partial changes so a failed run doesn't leave a stuck lock/transaction
+    raise
+finally:
+    cursor.close()
+    conn.close() #Always release the connection, even if something above failed or was interrupted
 
 
 #INCORPORATION OF FLASK STARTS BELOW
 
 app = Flask(__name__)
-
+@app.before_request #runs before every request made
+def check_api_key(): #function name (could be anything)
+    provided_key = request.headers.get("X-API-Key") 
+    if provided_key != API_KEY and request.path.startswith("/api/"): #only run the check if trying to access an api endpoint
+        return {"error": "Unauthorized"}, 401
 
 
 @app.route("/api/transactions") #GETS A JSON OF ALL TRANSACTIONS
 def transactions():
-    connection = sqlite3.connect("Transactions.db")   #Creates connection to database
-    cursor = connection.cursor()                      #Gives me a way of sending commands to database
+    conn = get_db_connection()   #Creates connection to database
+    cursor = conn.cursor()                      #Gives me a way of sending commands to database
     cursor.execute("SELECT * FROM transactions")
     transact = cursor.fetchall()
     transactions_list = []
@@ -99,9 +122,9 @@ def trans():
 
 @app.route("/api/transactions/<type>") #GETS A JSON OF TRANSACTIONS ACCORDING TO SPECIFIC TYPE OF TRANSACTION
 def transaction_per_type(type):
-    connection = sqlite3.connect("Transactions.db")
-    cursor = connection.cursor()
-    cursor.execute("SELECT * FROM transactions WHERE type = ?", (type,))
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM transactions WHERE type = %s", (type,))
     tuple_list = cursor.fetchall()
     transactions_list = []
     for tup in tuple_list:
@@ -121,9 +144,9 @@ def transac_per_type(type):
 
 @app.route("/api/transactions/<type>/total") #GETS TOTAL OF TRANSACTIONS FOR WHICHEVER TYPE YOU WANT
 def total_per_type(type):
-    connection = sqlite3.connect("Transactions.db")
-    cursor = connection.cursor()
-    cursor.execute("SELECT SUM(amount) FROM transactions WHERE type = ?",(type,))
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT SUM(amount) FROM transactions WHERE type = %s",(type,))
     total = cursor.fetchall()
     return jsonify(total[0][0])
 
@@ -134,9 +157,9 @@ def tot_per_type(type):
 
 @app.route("/api/transactions/date/<date>") #RETURNS TRANSACTIONS ON A SPECIFIC DATE
 def transactions_date(date):
-    connection = sqlite3.connect("Transactions.db")
-    cursor = connection.cursor()
-    cursor.execute("SELECT * FROM transactions WHERE Date = ?",(date,))
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM transactions WHERE Date = %s",(date,))
     tuple_list = cursor.fetchall()
     transactions_list = []
     for tup in tuple_list:
@@ -154,8 +177,8 @@ def trans_date(date):
 
 @app.route("/api/totals") #RETURNS TOTALS OF ALL TRANSACTIONS GROUPED BY TYPE
 def totals():
-    connection = sqlite3.connect("Transactions.db")
-    cursor = connection.cursor()
+    conn = get_db_connection()
+    cursor = conn.cursor()
     cursor.execute("SELECT SUM(Amount), Type FROM transactions GROUP BY Type")
     tuple_list = cursor.fetchall()
     totals_list = []
@@ -177,8 +200,8 @@ def tots():
 
 @app.route("/api/summary") #Shows how much you've spent, how much you've gained, and the difference between those
 def summary():
-    connection = sqlite3.connect("Transactions.db")
-    cursor = connection.cursor()
+    conn = get_db_connection()
+    cursor = conn.cursor()
     cursor.execute("SELECT SUM(Amount) FROM transactions WHERE Amount > 0")
     tuples = cursor.fetchall()
     transactions = []
