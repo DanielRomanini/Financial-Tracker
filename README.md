@@ -6,7 +6,7 @@ A REST API that parses Wells Fargo bank transaction data from a CSV file, catego
 ## Tech Stack
 - **Python** — core language
 - **Flask** — REST API framework
-- **SQLite** — local database via Python's built-in `sqlite3` module
+- **PostgreSQL** — local database via Python's built-in `sqlite3` module
 - **CSV** — transaction data parsed using Python's built-in `csv.DictReader`
 
 ## How to Run
